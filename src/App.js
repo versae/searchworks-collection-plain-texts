@@ -8,15 +8,15 @@ import saveAs from 'file-saver';
 import flat from 'array.prototype.flat';
 import Manifesto from 'manifesto.js';
 
-
 import logo from './logo.svg';
 import './App.css';
 
 PdfJsLib.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
 
 const getPDFsFromIIIFManifest = uri => fetch(uri, { method: 'GET' })
-  .then(response => Manifesto
-    .create(response.json().data)
+  .then(response => response.json())
+  .then(manifest => Manifesto
+    .create(manifest)
     .getSequences()
     .map(seq => seq
       .getRenderings()
