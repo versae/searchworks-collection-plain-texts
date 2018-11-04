@@ -22,3 +22,28 @@
   color: #61dafb;
 }
 
+input {
+  padding: .25rem;
+  font-size: initial;
+  margin: .25rem;
+}
+
+input[type="text"] {
+  width: 75%;
+  text-align: center;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  background: initial;
+  color: white;
+  font-size: initial;
+  padding: initial;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+progress {
+  width: 100%;
+}
