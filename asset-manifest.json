@@ -1,14 +1,14 @@
 {
-  "main.css": "/searchworks-collection-plain-texts/static/css/main.599a89db.chunk.css",
-  "main.js": "/searchworks-collection-plain-texts/static/js/main.84adb621.chunk.js",
-  "main.js.map": "/searchworks-collection-plain-texts/static/js/main.84adb621.chunk.js.map",
-  "static/js/1.10d21a16.chunk.js": "/searchworks-collection-plain-texts/static/js/1.10d21a16.chunk.js",
-  "static/js/1.10d21a16.chunk.js.map": "/searchworks-collection-plain-texts/static/js/1.10d21a16.chunk.js.map",
+  "main.css": "/searchworks-collection-plain-texts/static/css/main.aee50373.chunk.css",
+  "main.js": "/searchworks-collection-plain-texts/static/js/main.174bf62e.chunk.js",
+  "main.js.map": "/searchworks-collection-plain-texts/static/js/main.174bf62e.chunk.js.map",
+  "static/js/1.40e8066d.chunk.js": "/searchworks-collection-plain-texts/static/js/1.40e8066d.chunk.js",
+  "static/js/1.40e8066d.chunk.js.map": "/searchworks-collection-plain-texts/static/js/1.40e8066d.chunk.js.map",
   "runtime~main.js": "/searchworks-collection-plain-texts/static/js/runtime~main.89fff20d.js",
   "runtime~main.js.map": "/searchworks-collection-plain-texts/static/js/runtime~main.89fff20d.js.map",
   "static/media/logo.svg": "/searchworks-collection-plain-texts/static/media/logo.1e0f9ac8.svg",
-  "static/css/main.599a89db.chunk.css.map": "/searchworks-collection-plain-texts/static/css/main.599a89db.chunk.css.map",
+  "static/css/main.aee50373.chunk.css.map": "/searchworks-collection-plain-texts/static/css/main.aee50373.chunk.css.map",
   "index.html": "/searchworks-collection-plain-texts/index.html",
-  "precache-manifest.039680f06c6f7c66665ffe3bbeea8fc0.js": "/searchworks-collection-plain-texts/precache-manifest.039680f06c6f7c66665ffe3bbeea8fc0.js",
+  "precache-manifest.a92ed8832c31d14f1cf6d86674c4dcab.js": "/searchworks-collection-plain-texts/precache-manifest.a92ed8832c31d14f1cf6d86674c4dcab.js",
   "service-worker.js": "/searchworks-collection-plain-texts/service-worker.js"
 }
