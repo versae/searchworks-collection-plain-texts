@@ -15,7 +15,7 @@ const PROXY = 'https://cors-anywhere.herokuapp.com/';
 const TEST_COLLECTION = 'https://purl.stanford.edu/jt466yc7169';
 PdfJsLib.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
 
-const getPDFsFromIIIFManifest = uri => fetch(uri, { method: 'GET' })
+const getPDFsFromIIIFManifest = uri => fetch(`${PROXY}${uri}`, { method: 'GET' })
   .then(response => response.json())
   .then(manifest => Manifesto
     .create(manifest)
@@ -63,15 +63,15 @@ class App extends Component {
       let feed;
       if (hostname === 'purl.stanford.edu') {
         collection = path.slice(1);
-        feed = `${PROXY}https://searchworks.stanford.edu/catalog.json?f%5Bcollection%5D%5B%5D=${collection}&per_page=${this.maxDownloadFiles}`;
+        feed = `https://searchworks.stanford.edu/catalog.json?f%5Bcollection%5D%5B%5D=${collection}&per_page=${this.maxDownloadFiles}`;
       } else if (url.indexOf("searchworks.stanford.edu/catalog.atom") >= 0) {
         collection = url.replace("catalog.atom", "catalog.json");
-        feed = `${PROXY}${collection}&per_page=${this.maxDownloadFiles}`;
+        feed = `${collection}&per_page=${this.maxDownloadFiles}`;
       } else if (url.indexOf('searchworks.stanford.edu/catalog?') >= 0) {
         collection = url.replace('catalog?', 'catalog.json?');
-        feed = `${PROXY}${collection}&per_page=${this.maxDownloadFiles}`;
+        feed = `${collection}&per_page=${this.maxDownloadFiles}`;
       }
-      fetch(feed, { method: 'GET' })
+      fetch(`${PROXY}${feed}`, { method: 'GET' })
         .then(response => {
           this.setState({progress: 0});
           return response.json();
@@ -126,7 +126,7 @@ class App extends Component {
   retrieveManifest(label, manifestUri) {
     getPDFsFromIIIFManifest(manifestUri).then(pdfFiles => {
       return pdfFiles.map(pdfFile => {
-        const pdfDoc = PdfJsLib.getDocument(pdfFile.uri)
+        const pdfDoc = PdfJsLib.getDocument(`${PROXY}${pdfFile.uri}`)
         pdfDoc.onProgress = ({loaded, total}) => {
           this.setState({status: {...this.state.status, [[pdfFile.label]]: fileSize(loaded)}})
         }
@@ -166,7 +166,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            To download the available plain texts of a catalog collection containing PDF files,
+            To download the available plain texts of a IIIF catalog collection containing PDF files,
             <br />
             enter its URL and click on Download (only the first ~{this.maxDownloadFiles} items will be retrieved)
           </p>
