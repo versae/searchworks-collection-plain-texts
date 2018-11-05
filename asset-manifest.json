@@ -1,7 +1,7 @@
 {
   "main.css": "/searchworks-collection-plain-texts/static/css/main.aee50373.chunk.css",
-  "main.js": "/searchworks-collection-plain-texts/static/js/main.174bf62e.chunk.js",
-  "main.js.map": "/searchworks-collection-plain-texts/static/js/main.174bf62e.chunk.js.map",
+  "main.js": "/searchworks-collection-plain-texts/static/js/main.0374f116.chunk.js",
+  "main.js.map": "/searchworks-collection-plain-texts/static/js/main.0374f116.chunk.js.map",
   "static/js/1.40e8066d.chunk.js": "/searchworks-collection-plain-texts/static/js/1.40e8066d.chunk.js",
   "static/js/1.40e8066d.chunk.js.map": "/searchworks-collection-plain-texts/static/js/1.40e8066d.chunk.js.map",
   "runtime~main.js": "/searchworks-collection-plain-texts/static/js/runtime~main.89fff20d.js",
@@ -9,6 +9,6 @@
   "static/media/logo.svg": "/searchworks-collection-plain-texts/static/media/logo.1e0f9ac8.svg",
   "static/css/main.aee50373.chunk.css.map": "/searchworks-collection-plain-texts/static/css/main.aee50373.chunk.css.map",
   "index.html": "/searchworks-collection-plain-texts/index.html",
-  "precache-manifest.a92ed8832c31d14f1cf6d86674c4dcab.js": "/searchworks-collection-plain-texts/precache-manifest.a92ed8832c31d14f1cf6d86674c4dcab.js",
+  "precache-manifest.64a7cfd41bd85faffa8faea0795506cc.js": "/searchworks-collection-plain-texts/precache-manifest.64a7cfd41bd85faffa8faea0795506cc.js",
   "service-worker.js": "/searchworks-collection-plain-texts/service-worker.js"
 }
