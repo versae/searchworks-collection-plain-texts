@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/searchworks-collection-plain-texts/static/js/runtime~main.89fff20d.js"
   },
   {
-    "revision": "681a45b19dfc473f583e",
-    "url": "/searchworks-collection-plain-texts/static/js/main.681a45b1.chunk.js"
+    "revision": "91c2f8fa058f7449eeaf",
+    "url": "/searchworks-collection-plain-texts/static/js/main.91c2f8fa.chunk.js"
   },
   {
     "revision": "40e8066da88069499974",
     "url": "/searchworks-collection-plain-texts/static/js/1.40e8066d.chunk.js"
   },
   {
-    "revision": "681a45b19dfc473f583e",
-    "url": "/searchworks-collection-plain-texts/static/css/main.2fdf6ec4.chunk.css"
+    "revision": "91c2f8fa058f7449eeaf",
+    "url": "/searchworks-collection-plain-texts/static/css/main.77c3ea83.chunk.css"
   },
   {
-    "revision": "e8c2f216db27f48cbc6d25f32b2cbc59",
+    "revision": "3d34eedfeec2d01ce02b72a797b9f756",
     "url": "/searchworks-collection-plain-texts/index.html"
   }
 ];
