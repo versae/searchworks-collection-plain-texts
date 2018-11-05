@@ -181,7 +181,7 @@ class App extends Component {
               </button>.
             </small>
           </p>
-          <div>
+          <div className="App-log">
             {progress}
             <dl>
               {status}
