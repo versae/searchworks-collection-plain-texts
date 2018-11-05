@@ -11,7 +11,7 @@ import Manifesto from 'manifesto.js';
 import logo from './logo.svg';
 import './App.css';
 
-const PROXY = 'https://cors-anywhere.herokuapp.com/';
+const PROXY = 'https://cors-anywhere-vanfexfhcx.now.sh/';
 const TEST_COLLECTION = 'https://purl.stanford.edu/jt466yc7169';
 PdfJsLib.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
 

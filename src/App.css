@@ -22,6 +22,47 @@
   color: #61dafb;
 }
 
+button {
+  display: inline-block;
+  border: none;
+  background: initial;
+  color: white;
+  font-size: inherit;
+  padding: initial;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+dt {
+  float: left;
+  width: 60%;
+  text-align: right;
+  padding: .25em;
+  clear: left;
+  font-style: italic;
+  font-weight: light;
+}
+
+dt:first-child {
+  text-decoration: underline;
+  font-style: initial;
+}
+
+dd {
+  float: left;
+  padding: .25em 0;
+}
+
+dt:hover, dt:hover + dd {
+  opacity: 0.5;
+}
+
+dl:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 input {
   padding: .25rem;
   font-size: initial;
@@ -33,15 +74,8 @@ input[type="text"] {
   text-align: center;
 }
 
-button {
+li {
   display: inline-block;
-  border: none;
-  background: initial;
-  color: white;
-  font-size: initial;
-  padding: initial;
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 progress {
