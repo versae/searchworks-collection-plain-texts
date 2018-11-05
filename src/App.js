@@ -156,10 +156,10 @@ class App extends Component {
     const status = Object.keys(
       this.state.status
     ).map((item, idx) => (
-      [<dt key={`dd${idx}`}>{item}</dt>, <dd>{this.state.status[item]}</dd>]
+      [<dt key={`dt${idx}`}>{item}</dt>, <dd key={`dd${idx}`}>{this.state.status[item]}</dd>]
     ));
-    const downloads = Object.keys(this.state.zips).map(zip => (
-      <li>Download <button href="#" onClick={() => this.downloadZip(zip)}>{zip}.zip</button></li>
+    const downloads = Object.keys(this.state.zips).map((zip, idx) => (
+      <li key="li{idx}">Download <button href="#" onClick={() => this.downloadZip(zip)}>{zip}.zip</button></li>
     ));
     return (
       <div className="App">
@@ -168,7 +168,8 @@ class App extends Component {
           <p>
             To download the available plain texts of a IIIF catalog collection containing PDF files,
             <br />
-            enter its URL and click on Download (only the first ~{this.maxDownloadFiles} items will be retrieved)
+            enter its URL and click on Download
+            (only the first <acronym title="This is only a proof of concept">~{this.maxDownloadFiles} items</acronym> will be retrieved)
           </p>
           <p>
             <input type="text" ref={this.input} placeholder={TEST_COLLECTION} />

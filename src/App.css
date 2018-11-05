@@ -22,6 +22,10 @@
   color: #61dafb;
 }
 
+acronym {
+  cursor: pointer;
+}
+
 button {
   display: inline-block;
   border: none;
@@ -49,7 +53,9 @@ dt:first-child {
 }
 
 dd {
+  width: 30%;
   float: left;
+  text-align: left;
   padding: .25em 0;
 }
 
