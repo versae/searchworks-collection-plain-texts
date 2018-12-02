@@ -12,7 +12,8 @@
     "pdfjs-dist": "^2.0.943",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.1.0"
+    "react-scripts": "2.1.0",
+    "tesseract.js": "^1.0.14"
   },
   "scripts": {
     "start": "react-scripts start",

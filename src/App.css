@@ -63,6 +63,10 @@ dd {
   padding: .25em 0;
 }
 
+dd:first-letter{
+  text-transform: capitalize;
+}
+
 dt:hover, dt:hover + dd {
   opacity: 0.5;
 }

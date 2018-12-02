@@ -1,6 +1,7 @@
 import { parse as URLParse } from 'url';
 import React, { Component } from 'react';
 
+import Tesseract from 'tesseract.js'
 import PdfJsLib from 'pdfjs-dist';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
@@ -11,9 +12,9 @@ import Manifesto from 'manifesto.js';
 import logo from './logo.svg';
 import './App.css';
 
-const PROXY = 'https://cors-anywhere-vanfexfhcx.now.sh/';
-const TEST_COLLECTION = 'https://purl.stanford.edu/jt466yc7169';
 PdfJsLib.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
+
+const PROXY = 'https://cors-anywhere-vanfexfhcx.now.sh/';
 
 const getPDFsFromIIIFManifest = uri => fetch(`${PROXY}${uri}`, { method: 'GET' })
   .then(response => response.json())
@@ -29,9 +30,29 @@ const getPDFsFromIIIFManifest = uri => fetch(`${PROXY}${uri}`, { method: 'GET' }
     )
   ).then(flat);
 
+const getImagesFromIIIFManifest = uri => fetch(`${PROXY}${uri}`, { method: 'GET' })
+  .then(response => response.json())
+  .then(manifest => Manifesto
+    .create(manifest)
+    .getSequences()
+    .map(seq => seq
+      .getCanvases()
+      .map(canvas => ({
+        label: canvas.__jsonld.label,
+        uri: canvas.getCanonicalImageUri()
+      }))
+    )
+  ).then(flat);
+
+// http://host:port/iiif/2/filename.ext/full/500,/10/default.jpg
+const transformIIIFImage = (uri, { region = "full", size = "max", rotation = 0, quality = "default" } = {}) => {
+  const baseUri = uri.split('/').slice(0, -4).join('/')
+  return `${baseUri}/${region}/${size}/${rotation}/${quality}.jpg`;
+}
+
 const fileSize = size => {
-    const e = (Math.log(size) / Math.log(1e3)) | 0;
-    return +(size / Math.pow(1e3, e)).toFixed(2) + ' ' + ('kMGTPEZY'[e - 1] || '') + 'B';
+  const e = (Math.log(size) / Math.log(1e3)) | 0;
+  return +(size / Math.pow(1e3, e)).toFixed(2) + ' ' + ('kMGTPEZY'[e - 1] || '') + 'B';
 }
 
 class App extends Component {
@@ -50,8 +71,8 @@ class App extends Component {
     this.handleDownloadOnClick = this.handleDownloadOnClick.bind(this);
   }
 
-  handleTryOnClick() {
-    this.input.current.value = TEST_COLLECTION;
+  handleTryOnClick(url) {
+    this.input.current.value = url;
   }
 
   handleDownloadOnClick() {
@@ -100,11 +121,11 @@ class App extends Component {
   addTextToZip(label, filename, texts) {
     this.setState({
       zips: {[[label]]: new JSZip(), ...this.state.zips},
-      status: {...this.state.status, [[filename]]: "Adding to zip..."}
+      status: {...this.state.status, [[filename]]: "Extracting text..."}
     });
     Promise.all(texts.map(promise => promise.catch(err => err)))
     .then(textChunks => {
-      const text = textChunks.join(' ');
+      const text = textChunks.map(chunk => chunk.text || chunk).join(' ');
       this.setState({
         progress: this.state.progress + 1
       });
@@ -119,6 +140,11 @@ class App extends Component {
           status: {},
         })
       }
+    })
+    .then(() => {
+      this.setState({
+        status: {...this.state.status, [[filename]]: "Adding to zip..."}
+      })
     })
     .catch(err => console.log(err));
   }
@@ -144,7 +170,19 @@ class App extends Component {
       })
     }).then(files => {
       if (files.length === 0) {
-        this.setState({status: {...this.state.status, [[manifestUri]]: "No PDFs found"}})
+        this.setState({status: {...this.state.status, [[manifestUri]]: "No PDFs found. Searching images..."}});
+        getImagesFromIIIFManifest(manifestUri).then(imageFiles => {
+          return imageFiles.map(imageFile => {
+            const resizedImageFileURI = transformIIIFImage(imageFile.uri, { size: "512," });
+            return Tesseract.recognize(resizedImageFileURI)
+              .progress(({status, progress}) => this.setState({
+                status: {...this.state.status, [[manifestUri]]: `${status} (${imageFile.label}) ${parseInt(progress * 100)}%`}
+              }))
+              .then(result => result.text)
+          })
+        }).then(texts => {
+          this.addTextToZip(label, manifestUri, texts);
+        })
       }
     })
   }
@@ -156,7 +194,7 @@ class App extends Component {
     const status = Object.keys(
       this.state.status
     ).map((item, idx) => (
-      [<dt key={`dt${idx}`}>{item}</dt>, <dd key={`dd${idx}`}>{this.state.status[item]}</dd>]
+      [(!idx ? <dt key={`dt${idx}`}><a href={item}>{item}</a></dt> : <dt key={`dt${idx}`}>{item}</dt>), <dd key={`dd${idx}`}>{this.state.status[item]}</dd>]
     ));
     const downloads = Object.keys(this.state.zips).map((zip, idx) => (
       <li key="li{idx}">Download <button href="#" onClick={() => this.downloadZip(zip)}>{zip}.zip</button></li>
@@ -166,18 +204,21 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            To download the available plain texts of a IIIF catalog collection containing PDF files,
+            To download the available plain texts of a IIIF catalog collection containing PDF or <acronym title="Images will be OCR'ed in the browser using Tesseract (defaults to English)">image</acronym> files,
             <br />
             enter its URL and click on Download
             (only the first <acronym title="This is only a proof of concept">~{this.maxDownloadFiles} items</acronym> will be retrieved)
           </p>
           <p>
-            <input type="text" ref={this.input} placeholder={TEST_COLLECTION} />
+            <input type="text" ref={this.input} placeholder="https://purl.stanford.edu/jt466yc7169" />
             <input type="submit" onClick={this.handleDownloadOnClick} value="Download" />
             <br />
             <small>
-              Try the <button href="#" onClick={this.handleTryOnClick}>
+              Try the <button href="#" onClick={() => this.handleTryOnClick("https://purl.stanford.edu/jt466yc7169")}>
                 Jarndyce Single-Volume Nineteenth-Century Novel Collection, 1823-1914
+              </button>,<br />
+              or the <button href="#" onClick={() => this.handleTryOnClick("https://searchworks.stanford.edu/catalog?f%5Bcollection%5D%5B%5D=12358426")}>
+                Racism Lives Here Too Movement records, 2018
               </button>.
             </small>
           </p>
