@@ -14,7 +14,7 @@ import './App.css';
 
 PdfJsLib.GlobalWorkerOptions.workerSrc = '//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
 
-const PROXY = 'https://cors-anywhere-vanfexfhcx.now.sh/';
+const PROXY = process.env.PROXY || 'https://enigmatic-refuge-89957.herokuapp.com/';
 
 const getPDFsFromIIIFManifest = uri => fetch(`${PROXY}${uri}`, { method: 'GET' })
   .then(response => response.json())
